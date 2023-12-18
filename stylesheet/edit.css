@@ -1,0 +1,57 @@
+
+
+.img_input{
+    display: grid;
+    grid-gap: 10px;
+}
+
+.pp{
+    border-radius: 100%;
+    border: 3px solid ;
+    width:100px; 
+    height:100px;
+}
+
+.div_container{
+    display: grid;
+}
+
+.div_container div{
+    display: grid;
+}
+
+
+#img{
+    border: none;
+    font-size: 13px;
+}
+
+.div_container .form_wrap{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.wrapper{
+    width: 50%;
+    padding: 20px;
+}
+
+.wrapper img{
+    margin-left: 40px;
+}
+
+.div_container textarea{
+    width: 50vh;
+    max-width: 50vh;
+    height: 10vh;
+    max-height: 10vh;
+    min-width: 50vh;
+    min-height: 10vh;
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+button{
+    width: 50%;
+}

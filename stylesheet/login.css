@@ -1,0 +1,11 @@
+.getStarted{
+    opacity: 0;
+    width: 0;
+    transition: ease-in-out 1s;
+}
+
+.signup{
+    display: grid;
+    width: 100%;
+    opacity: 1;
+}
