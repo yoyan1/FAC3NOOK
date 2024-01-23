@@ -35,6 +35,17 @@
                         <div class="form_wrap">
                             <div class="input_wrap">
                                 <form action="../php/profile.php" method="POST" enctype="multipart/form-data">
+                                    <?php if (isset($_GET['msg'])){
+                                                echo "<p style='color: white'>Complete Account </p>";
+                                            } else {
+                                                
+                                            } 
+                                            if(isset($_GET['err'])){
+                                                echo "<p style='color: red; background: none; font-size: 12px'>".$_GET['err']."</p>";
+                                                echo "<p style='color: red; background: none; font-size: 12px'>Please enter a valid birth date that is not equal to or greater than today.</p>";
+                                            } else{
+
+                                            } ?>
                                     <div class="img_input">
                                         <?php if($user['profile'] == ""){ ?>
                                             <img src="../image/default-profile.png" alt="" class="pp">

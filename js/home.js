@@ -14,63 +14,49 @@ function dropdown(){
     var opacity = menu.style.opacity;
 
     if (opacity == 0){
-        menu.style.opacity = 1;
-        up.style.display = "block";
-        down.style.display = "none";
+        setTimeout(function () {
+            menu.style.opacity = 1;
+            up.style.display = "block";
+            down.style.display = "none";
+        }, 10)
     } else{
-        menu.style.opacity = 0;
-        down.style.display = "block";
-        up.style.display = "none";
+        setTimeout(function () {
+            menu.style.opacity = 0;
+            down.style.display = "block";
+            up.style.display = "none";
+        }, 1000)
     }
 }
 
 var root = document.querySelector(':root');
 
-function darkMode(){
-
-    root.style.setProperty('--background-color', '#1b1b1b');
-    root.style.setProperty('--font-color', '#d8d0d0');
-    root.style.setProperty('--style-color', 'black');
-    root.style.setProperty('--input--color', '#2e2d2d');
-    root.style.setProperty('--post-color', '#2e2e2e');
-    document.querySelector('.reaction_list').style.background = "#1b1b1b";
-    document.getElementById('on').style.display ="block";
-    document.getElementById('off').style.display ="none";
-}
-
-function lightMode(){
-
-    root.style.setProperty('--background-color', '#d4d8dbc9');
-    root.style.setProperty('--font-color', '#000000');
-    root.style.setProperty('--style-color', 'white');
-    root.style.setProperty('--input--color', '#ece7e7');
-    root.style.setProperty('--post-color', 'white');
-    document.querySelector('.reaction_list').style.background = "white";
-    document.getElementById('off').style.display ="block";
-    document.getElementById('on').style.display ="none";
+function change(){
+    $.ajax({
+        url:'../php/theme.php',
+        method:'POST',
+        
+    })
 }
 
 var loader = document.querySelector(".preloader");
+var popErr = document.querySelector(".err");
+var popSucc = document.querySelector(".suc");
+
+setTimeout(() => {
+    popErr.style.display = "none";
+}, 3000);
+
+setTimeout(() => {
+    popSucc.style.display = "none";
+}, 3000);
 
     window.addEventListener("load", function(){
     loader.style.display = "none";
-    
 })
 
 var message = document.querySelector(".message");
 
-function showAll() {
-   
-    var msgDisplay = message.style.display;
 
-    if(msgDisplay == "none"){
-        message.style.display = "block";
-
-    } else{
-        message.style.display = "none";
-    }
-
-}
 
         let offsetX, offsetY;
         let isDragging = false;
@@ -93,4 +79,5 @@ function showAll() {
         });
         
 
-       
+var notif = document.querySelector(".notif-dropdown");
+

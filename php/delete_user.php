@@ -1,8 +1,7 @@
 <?php
     session_start();
     include "../connection/dbcon.php";
-    $admin = $_SESSION['id'];
-
+    
     if(isset($_GET['user_id'])){
         $id = $_GET['user_id'];
 
@@ -10,7 +9,7 @@
 
         if($delete){
             $_SESSION['id'] = $admin;
-            header("location: ../admin/index.php");
+            header("location: ../admin/members.php");
 
         } else{
             echo("error");

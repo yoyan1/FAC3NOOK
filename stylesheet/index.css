@@ -88,7 +88,7 @@ main{
     gap: 20px;
     border-radius: 15px;
     width: 60%;
-    box-shadow: 1px 2px 10px black;
+    box-shadow: 0px 0px 3px black;
 }
 
 .wrapper{

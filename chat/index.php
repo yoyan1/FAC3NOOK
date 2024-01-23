@@ -3,8 +3,13 @@
  include '../connection/dbcon.php';
  $logUser = $_SESSION['id'];
 
+ 
+ //
  $id = $_GET['userid'];
- $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id = '$id'"));
+ //clear all from notif msg to clear count
+ 
+ $clear = mysqli_query($conn, "DELETE FROM `msg_notif` WHERE  `frm_id` = '$id'");
+$row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id = '$id'"));
 
 $check_data = "SELECT * FROM chat WHERE sender = '$logUser' OR sender = '$id' ORDER BY id ASC";
 $run_query = mysqli_query($conn, $check_data) or die("Error");
@@ -15,6 +20,23 @@ if(isset($_POST['submit']) && isset($_POST['msg'])){
     $message = $_POST['msg'];
     mysqli_query($conn,"INSERT INTO `chat`(`sender`, `reciever`, `message`) VALUES ('$logUser', '$id', '$message')") or die('QUERY FAILED');
     $_SESSION['id'] = $logUser;
+
+    $msg_notify = mysqli_query($conn, "INSERT INTO `msg_notif`(`frm_id`, `to_id`, `message`) VALUES ('$logUser', '$id', '$message')") or die('failed');
+
+    if ($msg_notify){
+
+        $frm_count_msg = mysqli_query($conn, "SELECT * FROM `msg_count` WHERE `UID` = '$id'");
+
+        if(mysqli_num_rows($frm_count_msg) > 0){
+            $fetch = mysqli_fetch_assoc($frm_count_msg);
+            $count = $fetch['count'] + 1;
+            $add_count = mysqli_query($conn, "UPDATE `msg_count` SET `count` = '$count' WHERE `UID` = '$id'");
+        } else{
+            $ins_msg = mysqli_query($conn, "INSERT INTO `msg_count` (`UID`, `count`) VALUES ('$id', 1)");
+        }
+    } else{
+        echo "error";
+    }
     header("location: ../chat/index.php?userid=$id");
 }else{
 

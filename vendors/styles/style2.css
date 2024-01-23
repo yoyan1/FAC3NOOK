@@ -1,0 +1,58 @@
+.label{
+    display: flex;
+    justify-content: center;
+}
+.label{
+    font-size: 15px;
+}
+
+.idForm{
+    padding: 20px;
+    width: 100%;
+}
+
+.idForm label{
+    font-size: 20px;
+}
+
+form input{
+    border: 1px solid #b4acac;
+    font-size: 15px;
+    border-radius: 5px;
+    width: 17rem;
+    height: 2.5rem;
+}
+
+form{
+    display: flex;
+    justify-content: space-between;
+} 
+
+form button{
+    font-size: 15px;
+    height: 40px;
+    width: 5rem;
+    border: 1px solid #0044ff;
+    background: #0044ff;
+    color: white;
+    border-radius: 5px;
+}
+
+.option{
+    border: 1px solid #01b301;
+    background: #01b301;
+    color: white;
+    padding: 7px 20px 7.5px;
+    border-radius: 5px;
+}
+
+.option:hover{
+    color: white;
+    background: #5ed35e;
+    border: 1px solid #5ed35e;
+}
+
+.idForm button:hover{
+    background: #5778d1;
+    border: 1px solid #5778d1;
+}

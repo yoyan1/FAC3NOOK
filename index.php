@@ -1,3 +1,16 @@
+<?php
+session_start();
+include "connection/dbcon.php";
+$browser = $_SERVER['HTTP_USER_AGENT'];
+    $lastON = mysqli_query($conn, "SELECT * FROM browse_type LEFT JOIN user ON user.id = browse_type.user WHERE type = '$browser' AND status = 'ONLINE'") or die("failed");
+    if(mysqli_num_rows($lastON) > 0){
+        $row = mysqli_fetch_assoc($lastON);
+        $_SESSION['id'] = $row['id'];
+        header("location: home/home.php");
+    } else{
+
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

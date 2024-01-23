@@ -5,21 +5,30 @@
 *{
     margin: 0;
     padding: 0;
-    transition: ease-in-out 0.5s;
+   
 }
 
 ::-webkit-scrollbar {
     display: none;
   }
-  
 
-:root{
-    --font-color: #000000;
-    --background-color: #d4d8dbc9; 
-    --style-color: white;
-    --input--color: #d3d9e4;
-    --post-color: white;
+@media  (max-width: 900px) {
+    .right{
+        display: none;
+    }
 }
+
+@media  (max-width: 375px) {
+    .left{
+        display: none;
+    }
+
+    .center{
+        width: 100%;
+    }
+}
+
+
 
 body{
     box-sizing: border-box;
@@ -27,6 +36,7 @@ body{
     background: var(--background-color);
     color: var(--font-color);
     user-select: none;
+    transition: ease-in-out 0.5s;
 }
 
 .preloader{
@@ -97,6 +107,32 @@ button{
     cursor: pointer;
 }
 
+.err, .suc{
+    position: fixed;
+    right: 0;
+    padding:30px 10px;
+    top: 0;
+    background: var(--style-color);
+    z-index: 100;
+    display: flex;
+    gap: 5px;
+    border: 1px solid rgb(201, 192, 192);
+}
+
+.err p, .suc p{
+    margin-top: 6px;
+}
+
+.err  i{
+    color: rgb(231, 19, 19);
+    font-size: 30px;
+}
+
+.suc i{
+    color: rgb(36, 228, 62);
+    font-size: 30px;
+}
+
 header{
     display: flex;
     justify-content: space-between;
@@ -120,7 +156,7 @@ header h1{
     display: flex;
     gap: 4rem;
     padding-top: 20px;
-    margin-left: -3rem;
+    margin-left: -2rem;
 }
 
 .nav_bar a{
@@ -128,43 +164,23 @@ header h1{
     color: var(--font-color);
     font-weight: bold;
     font-size: 15px;
+    
 }
 
-.search {
-    display: flex;
-    padding-top: 10px;
-}
-.search input{
-    height: 2rem;
-    width: 100%;
-    border: 1px solid #a8a4a4;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    padding: 0 10px;
-}
-
-.search button{
-    height: 2.1rem;
-    border: 1px solid #1F82F6;
-    background: #1F82F6;
-    color: white;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    padding: 0 10px; 
-    cursor: pointer;
-}
 
 .profile{
     display: flex;
-    justify-content: space-between;
     margin-top: 10px;
-    gap: 5px;
+    width: 12rem;
+    position: fixed;
+    right: 0;
 }
 
 .profile img{
     width: 30px;
     height: 30px;
     border-radius: 100%;
+    padding: 3px;
 }
 
 .profile h3{
@@ -175,9 +191,17 @@ header h1{
 .profile a{
     font-size: 20px;
     text-decoration: none;
-    color: var(--font-color);
+    color: #000000;
+    width: 4rem;
+    max-width: 4rem;
 }
 
+#down, #up{
+    padding: 5px 0;
+    margin-left: 5px;
+    width:0;
+    color: var(--font-color);
+}
 .dropdown{
     display: grid;
     grid-gap: 15px;
@@ -187,6 +211,7 @@ header h1{
     padding: 5px 30px 10px;
     box-shadow: 1px 2px 5px black;
     position: relative;
+    top: 3.5rem;
     opacity: 0;
     transition: ease-in-out 1s;
     z-index: 1;
@@ -233,8 +258,8 @@ main{
 
 .left_wrap{
     display: grid;
-    grid-gap: 10px;
 }
+
 
 .left a{
     text-decoration: none;
@@ -243,10 +268,14 @@ main{
 }
 
 .nav .a1{
-    font-size: 18px;
-    margin-left: 40px;
-    
+    font-size: 20px;
+    padding: 15px;
 }
+
+.a1:hover{
+    background: var(--submain-color);
+}
+
 .center{
     width: 50%;
     min-width: 40rem;
@@ -255,7 +284,7 @@ main{
 
 .feed_con{
     overflow-y: scroll;
-    max-height: 25rem;
+    max-height: 26rem;
     display: grid;
     grid-gap: 10px;
     padding-bottom: 10rem;
@@ -280,10 +309,9 @@ main{
 
 .feed_container .nav{
     display: grid;
-    grid-gap: 20px;
     background: var(--style-color);
-    padding: 10px 15px 20px ;
-    border-radius: 5px
+    padding: 20px 0 ;
+    border-radius: 5px 5px 0 0;
 }
 
 .card {
@@ -369,6 +397,7 @@ main{
 .nav .nav_profile{
     display: flex;
     gap: 10px;
+    margin-bottom: 10px;
 
 }
  .name_wrap a{
@@ -560,7 +589,7 @@ main{
     padding: 5px 10px;
     margin-top: -30px;
     margin-left: -100px;
-    width: 56vh;
+    width: 58vh;
     background: var(--post-color);
     border: 1px solid #646161;
     border-radius: 10px;
@@ -811,6 +840,13 @@ main{
     color: gray;
 }
 
+.list p span{
+    background: red;
+    color: white;
+    border-radius: 100%;
+    padding: 2px 5px;
+    font-size: 10px;
+}
 .velocity a{
     text-decoration: none;
     color: var(--font-color);
@@ -848,6 +884,7 @@ main{
     min-height: 70vh;
     border:1px solid #1F82F6;
     border-radius: 5px;
+    transition:  0.3s;
 }
 
 .msg{
@@ -1001,13 +1038,7 @@ main{
     padding: 0;
 }
 
-.reply .text_wrap{
-    color: var(--font-color);
-    display: flex;
-    background: var(--input--color);
-    gap: 5px;
-    max-width: 15rem;
-}
+
 
 .reply .text_wrap a{
     font-weight: bold;
@@ -1027,6 +1058,7 @@ main{
     width: 100%;
     padding: 20px 0;
     transition: ease-in-out 1s;
+    z-index: 1;
 }
 
 .confirm div{
@@ -1051,4 +1083,114 @@ main{
 
 .confirm .yes{
     background: #1F82F6;
+}
+
+.nav_but{
+    display: flex; 
+    gap: 10px;
+}
+
+.nav_but a{
+    font-size: 15px;
+    color: #000000;
+    text-decoration: none;
+    
+}
+
+.profile #notif{
+    padding: 8px;
+    text-align: center;
+    border-radius: 100%;
+    background: #cfd3d6;
+}
+.badge{
+    position: relative;
+    top: -15px;
+    left: -20px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: white;
+    border-radius: 100%;
+    padding: 3px 5px ;
+    font-size: 10px;
+}
+
+.notif-dropdown{
+    position: fixed;
+    top: 4rem;
+    right: 5rem;
+    z-index: 1;
+    background: var(--style-color);
+    box-shadow: 1px 1px 5px black;
+    padding: 10px 10px;
+    border-radius: 3px;
+    height: 0;
+    max-height: 31rem;
+    overflow-y: scroll;
+    display: none;
+    transition: 0s;
+}
+
+.notif-wrap{
+    display: grid;
+    grid-gap: 5px;
+
+}
+
+.notif-dropdown h1{
+    color: var(--font-color);
+    font-size: 25px;
+    font-weight: 500;
+    font-size: Roboto;
+}
+.row-notif{
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--font-color);
+    font-size: Roboto;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.row-notif:hover{
+    background: #d6d9db;
+    color: #000000;
+}
+
+.type_wrap span{
+    margin-top: -5px;
+    margin-left: -25px;
+    font-size: 15px;
+    border-radius: 100%;
+}
+
+.type_wrap .fa-thumbs-up{
+    color: #1F82F6;
+    background: white;
+}
+
+.type_wrap .fa-heart{
+    color: #e91e1e;
+    background: white;
+}
+
+.type_wrap span i{
+    font-size: 15px;
+    color: white;
+    background: rgb(76, 204, 76);
+    border-radius: 100%;
+    padding: 3px 3px 1.5px 3px;
+}
+.row-notif img{
+    border-radius: 100%;
+}
+.type p{
+    max-width: 15rem;
+}
+
+.type .hour{
+    font-size: 10px;
+    color: #1F82F6;
 }

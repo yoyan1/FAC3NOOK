@@ -10,10 +10,11 @@
 }
 
 .reply .text_wrap{
-    background: #d3d9e4;
+    background: var(--background-color);
     padding: 10px;
     display: grid;
     margin-left: 10px;
+    color: var(--font-color);
 }
 .reply .text_wrap a{
     font-weight: bold;

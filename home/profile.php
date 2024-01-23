@@ -1,0 +1,166 @@
+<?php
+    include "header.php";
+    $id = $user['id'];
+
+    if(!isset($_GET['user'])){
+?>
+    <style>
+            #profile{
+                background: var(--background-color); 
+                color: var(--font-color);
+                
+            }
+    </style>
+<?php } else{} ?>
+<main>
+        <div class="feed_container">
+            <?php include "left.php"?>
+            <!--Center-->
+            <div class="center">
+                <div class="feed_con">
+                    <?php 
+                                if(!isset($_GET['user'])){
+                                    $sel_post = mysqli_query($conn, "SELECT * FROM publication WHERE user_id = '$id' ORDER BY date DESC") or die("query failed");
+
+                                    $user_query = mysqli_query($conn, "SELECT * FROM user WHERE id = '$id' ") or die("query failed");
+                                    $user_in = mysqli_fetch_assoc($user_query);
+                                    $_SESSION['id'] = $id;
+                                } else{
+                                    $get_id = $_GET['user'];
+                                    $sel_post = mysqli_query($conn, "SELECT * FROM publication WHERE user_id = '$get_id' ORDER BY date DESC") or die("query failed");
+
+                                    $user_query = mysqli_query($conn, "SELECT * FROM user WHERE id = '$get_id' ") or die("query failed");
+                                    $user_in = mysqli_fetch_assoc($user_query);
+                                    $_SESSION['id'] = $id;
+                                }
+                        
+                        ?>
+                    <div class="card">
+                        <div class="card__img">
+                                <h1>facenook</h1>
+                        </div>
+                        <div class="card__avatar">
+                            <?php if($user_in['profile'] == ""){ ?>
+                            <img src="../image/default-profile.png" width="80px" height="80px" alt="">
+                            <?php } else{ ?>
+                            <img src="../php/uploads/<?=$user_in['profile']?>" width="80px" height="80px" alt="">
+                            <?php } ?>
+                        </div>
+                        <div class="card__title"><?=$user_in['fname']?></div>
+                        <div class="card__subtitle">"<?=$user_in['biography']?>"</div>
+                        <div class="card__wrapper">
+                            <?php if(!isset($_GET['user'])){
+
+                            } else{ ?>
+                                <a href="../chat/index.php?userid=<?=$user_in['id']?>" class="card__btn">Message</a>
+                            <?php } ?>
+                        </div>
+                    </div><?php if($user_in == $id){?>
+                                <form action="../php/publish.php" method="post" enctype="multipart/form-data">
+                                    <div class="post">
+                                    <?php if($user['profile'] == ""){ ?>
+                                        <img src="../image/default-profile.png" width="40px" height="40px" style="max-height: 40px;" alt="">
+                                        <?php } else{ ?>
+                                        <img src="../php/uploads/<?=$user['profile']?>" width="40px" height="40px" style="max-height: 40px;" alt="">
+                                        <?php } ?>
+                                        <input type="text" name="post" id="" placeholder="type something here...">
+                                        <label for="file"><i class="fa-solid fa-paperclip"></i></label>
+                                        <input type="file" name="doc" id="file" style="display: none;" accept=".doc, .docx">
+                                        <label for="img"><i class="fa-solid fa-image"></i></label>
+                                        <input type="file" name="image" id="img" style="display: none;">
+                                        <label for="post"><i class="fa-solid fa-paper-plane" style="color: #1F82F6;"></i></label>
+                                        <button id="post" style="display: none;"></button>
+                                    </div>
+                                </form>
+                            <?php } else{} ?>
+                           
+                    <!-- Feed -->
+                    <b>News feed</b>
+                    <?php   
+                            while($row_post = mysqli_fetch_assoc($sel_post)){
+                                $user_id = $row_post['user_id'];
+                                $sel_user = mysqli_query($conn, "SELECT * FROM user WHERE id = '$user_id'");
+                                $row_user = mysqli_fetch_assoc($sel_user);
+                                $date = $row_post['date'];
+                                $_SESSION['post_id'] = $row_post['post_id'];
+                                ?>
+                                
+                                <div class="newsfeed">
+                                    <div class="nav_profile">
+                                    <?php if($row_user['profile'] == ""){ ?>
+                                        <img src="../image/default-profile.png" width="40px" height="40px" style="max-height: 40px;" alt="">
+                                    <?php } else{ ?>
+                                        <img src="../php/uploads/<?=$row_user['profile']?>" width="40px" height="40px" style="max-height: 40px;" alt="">
+                                        <?php } ?>
+                                        <div class="name_wrap">
+                                            <a href="profile.php"><?=$row_user['fname']?></a>
+                                            <p><?=getTimeLapse($date)?></p>
+                                        </div>
+                                        <?php if($row_post['user_id'] == $user['id']){ ?>
+                                                    <div class="option">
+                                                        <div class="del">
+                                                            <a href="profile.php?del=<?=$row_post['post_id']?>" class="delete"><i class="fa-solid fa-trash"></i></a>
+                                                        </div>
+                                                    </div>
+                                        <?php } else{}?>
+                                    </div>
+                                    <div class="user_post">
+                                        <p><?=$row_post['post']?></p>
+                                        <img src="../php/uploads/<?=$row_post['image']?>" alt="">
+                                    </div>
+                                    <div class="reaction_container">
+                                        <div class="reaction_icon">
+                                            <span href="#" id="like" >
+                                                <?php   $post_id =  $row_post['post_id'];
+                                                        $react_row = mysqli_query($conn, "SELECT * FROM reactiondb WHERE reactor_id = '$id' AND post_id = '$post_id'");
+                                                        $reaction = mysqli_fetch_assoc($react_row);
+                                                        $reactionType = $reaction['react'];
+
+                                                        if($reactionType == "like"){?>
+                                                            <i class="fa-solid fa-thumbs-up" style="color: #005eff;"></i>
+                                                    <?php } else if($reactionType == "heart"){?>
+                                                                <img src="../reaction/heart.gif" width="30px" alt="" id="reaction">
+                                                    <?php } else if($reactionType == "haha"){?>
+                                                                <img src="../reaction/haha.gif" width="30px" alt="" id="reaction">
+                                                    <?php } else if($reactionType == "wow"){?>
+                                                                <img src="../reaction/wow.gif" width="30px" alt="" id="reaction">
+                                                    <?php } else if($reactionType == "sad"){?>
+                                                                <img src="../reaction/sad.gif" width="30px" alt="" id="reaction">
+                                                    <?php } else if($reactionType == "angry"){?>
+                                                                <img src="../reaction/angry.gif" width="30px" alt="" id="reaction">
+                                                    <?php } else { ?>
+                                                                <i class="fa-regular fa-thumbs-up"></i>
+                                                    <?php } ?>
+                                                <div class="reaction_list" >
+                                                    <form  class="reaction_wrap" >
+                                                        <a href="../php/reaction.php?like=<?=$post_id?>"><img src="../reaction/like.gif" width="50px" alt=""> </a>
+                                                        <a href="../php/reaction.php?heart=<?=$post_id?>"><img src="../reaction/heart.gif" width="50px" alt=""></a>
+                                                        <a href="../php/reaction.php?haha=<?=$post_id?>"><img src="../reaction/haha.gif" width="50px" alt=""></a>
+                                                        <a href="../php/reaction.php?wow=<?=$post_id?>"><img src="../reaction/wow.gif" width="50px" alt=""></a>
+                                                        <a href="../php/reaction.php?sad=<?=$post_id?>"><img src="../reaction/sad.gif" width="50px" alt=""></a>
+                                                        <a href="../php/reaction.php?angry=<?=$post_id?>"><img src="../reaction/angry.gif" width="50px" alt=""></a>
+                                                    </form>
+                                                </div>
+                                                <?php if($row_post['reaction'] > 0){ 
+                                                        echo $row_post['reaction'];
+                                                     } else{}?>
+                                            </span><hr>
+                                            <a href="comment.php?post_id=<?=$post_id?>" id="cm">
+                                                <i class="fa-regular fa-comment"></i>
+                                                <?php if($row_post['comments'] > 0){ 
+                                                        echo $row_post['comments'];
+                                                     } else{}?>
+                                            </a>
+                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } ?>
+                        <p class="end">End of all post</p>
+                </div>
+                
+            </div>
+            <?php include "right.php" ?>
+        </div>
+    </main>
+   
